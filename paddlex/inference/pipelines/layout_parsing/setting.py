@@ -61,17 +61,17 @@ BLOCK_LABEL_MAP = {
         "figure_title",
         "figure_table_chart_title",
     ],  # 图表标题
-    "unordered_labels": [
-        "aside_text",
-        "seal",
-        "number",
-        "formula_number",
-    ],
+    "unordered_labels": [],
     "text_labels": ["text"],
     "header_labels": ["header", "header_image"],
     "footer_labels": ["footer", "footer_image", "footnote"],
     "visualize_index_labels": [
         "text",
+        "table",
+        "chart",
+        "image",
+        "figure",
+        "figure_title",
         "formula",
         "algorithm",
         "reference",

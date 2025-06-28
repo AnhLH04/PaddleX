@@ -207,11 +207,11 @@ def update_region_label(
         and block.order_label is None
     ):
         block.order_label = "paragraph_title"
-    elif block.label in BLOCK_LABEL_MAP["vision_labels"]:
-        block.order_label = "vision"
-        block.num_of_lines = 1
-        block.direction = region.direction
-        block.update_direction_info()
+    # elif block.label in BLOCK_LABEL_MAP["vision_labels"]:
+    #     block.order_label = "vision"
+    #     block.num_of_lines = 1
+    #     block.direction = region.direction
+    #     block.update_direction_info()
     elif block.label in BLOCK_LABEL_MAP["footer_labels"]:
         block.order_label = "footer"
     elif block.label in BLOCK_LABEL_MAP["unordered_labels"]:

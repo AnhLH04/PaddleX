@@ -371,10 +371,11 @@ def weighted_distance_insert(
         )
 
         if (
-            block.label not in BLOCK_LABEL_MAP["unordered_labels"]
-            or block.label in BLOCK_LABEL_MAP["doc_title_labels"]
-            or block.label in BLOCK_LABEL_MAP["paragraph_title_labels"]
-            or block.label in BLOCK_LABEL_MAP["vision_labels"]
+            block.label
+            not in BLOCK_LABEL_MAP["unordered_labels"]
+            # or block.label in BLOCK_LABEL_MAP["doc_title_labels"]
+            # or block.label in BLOCK_LABEL_MAP["paragraph_title_labels"]
+            # or block.label in BLOCK_LABEL_MAP["vision_labels"]
         ) and is_below_sorted_block:
             up_edge_distance = -up_edge_distance
             left_edge_distance = -left_edge_distance

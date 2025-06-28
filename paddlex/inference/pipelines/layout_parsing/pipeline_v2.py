@@ -437,7 +437,7 @@ class _LayoutParsingPipelineV2(BasePipeline):
                             )
 
         # use layout bbox to do ocr recognition when there is no matched ocr
-        for layout_box_idx, overall_ocr_idxes in block_to_ocr_map.items():
+        """for layout_box_idx, overall_ocr_idxes in block_to_ocr_map.items():
             has_text = False
             for idx in overall_ocr_idxes:
                 if overall_ocr_res["rec_texts"][idx] != "":
@@ -470,7 +470,7 @@ class _LayoutParsingPipelineV2(BasePipeline):
                     overall_ocr_res["rec_labels"].append("text")
                     block_to_ocr_map[layout_box_idx].append(
                         len(overall_ocr_res["rec_texts"]) - 1
-                    )
+                    )"""
 
         # when there is no layout detection result but there is ocr result, convert ocr detection result to layout detection result
         if len(layout_det_res["boxes"]) == 0 and len(overall_ocr_res["rec_boxes"]) > 0:
@@ -802,7 +802,6 @@ class _LayoutParsingPipelineV2(BasePipeline):
                 )
                 img = Image.fromarray(image[y_min:y_max, x_min:x_max, ::-1])
                 block.image = {"path": img_path, "img": img}
-
             layout_parsing_blocks.append(block)
 
         region_list: List[LayoutParsingRegion] = []
@@ -823,7 +822,6 @@ class _LayoutParsingPipelineV2(BasePipeline):
             region_list,
             key=lambda r: (r.weighted_distance),
         )
-
         return region_list
 
     def get_layout_parsing_res(

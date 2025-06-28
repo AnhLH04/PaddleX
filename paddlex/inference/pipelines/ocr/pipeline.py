@@ -347,9 +347,18 @@ class _OCRPipeline(BasePipeline):
                 item["output_img"] for item in doc_preprocessor_results
             ]
 
-            det_results = list(
-                self.text_det_model(doc_preprocessor_images, **text_det_params)
-            )
+            # det_results = list(
+            #     self.text_det_model(doc_preprocessor_images, **text_det_params)
+            # )
+            det_results = [
+                {
+                    "input_path": None,
+                    "page_index": None,
+                    "input_img": None,
+                    "dt_polys": [],
+                    "dt_scores": [],
+                }
+            ] * len(doc_preprocessor_images)
 
             dt_polys_list = [item["dt_polys"] for item in det_results]
 
@@ -379,7 +388,6 @@ class _OCRPipeline(BasePipeline):
 
             indices = list(range(len(doc_preprocessor_images)))
             indices = [idx for idx in indices if len(dt_polys_list[idx]) > 0]
-
             if indices:
                 all_subs_of_imgs = []
                 chunk_indices = [0]
@@ -429,11 +437,17 @@ class _OCRPipeline(BasePipeline):
                     sorted_subs_of_img = [
                         all_subs_of_img[x["sub_img_id"]] for x in sorted_subs_info
                     ]
-                    for i, rec_res in enumerate(
-                        self.text_rec_model(sorted_subs_of_img)
-                    ):
+                    for i in range(len(sorted_subs_of_img)):
+                        rec_res = {
+                            "input_path": None,
+                            "page_index": None,
+                            "input_img": None,
+                            "rec_text": "1",
+                            "rec_score": 1,
+                        }
                         sub_img_id = sorted_subs_info[i]["sub_img_id"]
                         sub_img_info_list[sub_img_id]["rec_res"] = rec_res
+
                     for sno in range(len(sub_img_info_list)):
                         rec_res = sub_img_info_list[sno]["rec_res"]
                         if rec_res["rec_score"] >= text_rec_score_thresh:
