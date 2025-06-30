@@ -44,6 +44,7 @@ from .utils import (
     group_boxes_into_lines,
     remove_overlap_blocks,
     shrink_supplement_region_bbox,
+    sorted_layout_boxes,
     split_boxes_by_projection,
     update_region_box,
 )
@@ -881,6 +882,7 @@ class _LayoutParsingPipelineV2(BasePipeline):
         for region in region_list:
             parsing_res_list.extend(region.sort())
 
+        parsing_res_list = sorted_layout_boxes(parsing_res_list, w=image.shape[1])
         index = 1
         for block in parsing_res_list:
             if block.label in BLOCK_LABEL_MAP["visualize_index_labels"]:

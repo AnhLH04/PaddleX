@@ -127,11 +127,12 @@ def sorted_layout_boxes(res, w):
         List of dictionaries containing sorted layout information.
     """
     num_boxes = len(res)
+    print(num_boxes)
     if num_boxes == 1:
         return res
 
     # Sort on the y axis first or sort it on the x axis
-    sorted_boxes = sorted(res, key=lambda x: (x["block_bbox"][1], x["block_bbox"][0]))
+    sorted_boxes = sorted(res, key=lambda x: (x.bbox[1], x.bbox[0]))
     _boxes = list(sorted_boxes)
 
     new_res = []
@@ -143,13 +144,10 @@ def sorted_layout_boxes(res, w):
         if i >= num_boxes:
             break
         # Check that the bbox is on the left
-        elif (
-            _boxes[i]["block_bbox"][0] < w / 4
-            and _boxes[i]["block_bbox"][2] < 3 * w / 5
-        ):
+        elif _boxes[i].bbox[0] < w / 4 and _boxes[i].bbox[2] < 3 * w / 5:
             res_left.append(_boxes[i])
             i += 1
-        elif _boxes[i]["block_bbox"][0] > 2 * w / 5:
+        elif _boxes[i].bbox[0] > 2 * w / 5:
             res_right.append(_boxes[i])
             i += 1
         else:
@@ -160,8 +158,8 @@ def sorted_layout_boxes(res, w):
             res_right = []
             i += 1
 
-    res_left = sorted(res_left, key=lambda x: (x["block_bbox"][1]))
-    res_right = sorted(res_right, key=lambda x: (x["block_bbox"][1]))
+    res_left = sorted(res_left, key=lambda x: (x.bbox[1]))
+    res_right = sorted(res_right, key=lambda x: (x.bbox[1]))
 
     if res_left:
         new_res += res_left
